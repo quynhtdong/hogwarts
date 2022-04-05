@@ -1,6 +1,7 @@
 package edu.tcu.cs.hogwartsartifactsonline.datainitializer;
 
 import edu.tcu.cs.hogwartsartifactsonline.dao.ArtifactDao;
+import edu.tcu.cs.hogwartsartifactsonline.dao.WizardDao;
 import edu.tcu.cs.hogwartsartifactsonline.domain.Artifact;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -10,8 +11,11 @@ public class DBDataInitializer implements CommandLineRunner {
 
     private ArtifactDao artifactDao;
 
-    public DBDataInitializer(ArtifactDao artifactDao){
+    private WizardDao wizardDao;
+
+    public DBDataInitializer(ArtifactDao artifactDao, WizardDao wizardDao) {
         this.artifactDao = artifactDao;
+        this.wizardDao = wizardDao;
     }
 
     @Override
