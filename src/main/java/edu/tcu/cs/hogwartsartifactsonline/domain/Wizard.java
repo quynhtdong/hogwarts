@@ -1,10 +1,11 @@
 package edu.tcu.cs.hogwartsartifactsonline.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Wizard implements Serializable {
@@ -13,8 +14,20 @@ public class Wizard implements Serializable {
     private Integer id;
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @JsonIgnore
+    private List<Artifact> artifacts = new ArrayList<>();
+
     public Wizard(){
 
+    }
+
+    public List<Artifact> getArtifacts() {
+        return artifacts;
+    }
+
+    public void setArtifacts(List<Artifact> artifacts) {
+        this.artifacts = artifacts;
     }
 
     public Integer getId() {
@@ -31,5 +44,15 @@ public class Wizard implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addArtifact(Artifact artifact){
+        artifact.setOwner(this);
+        this.artifacts.add(artifact);
+    }
+
+    public void removeArtifact(Artifact artifact){
+        artifact.setOwner(null);
+        this.artifacts.remove(artifact);
     }
 }
